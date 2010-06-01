@@ -1,21 +1,48 @@
-# difform
+#title difform - June 1, 2010
 
-Diffs two clojure forms, eg:
+** Diffing Clojure Forms
 
+Start with Stuart Sierra's excellent clojure.walk, (to sort the
+maps/sets,) add Tom Faulhauber wonderful Clojure pretty print, and
+finish it off with Neil Fraser's magnificent Java diff library:
+http://code.google.com/p/google-diff-match-patch/wiki/API, and you'll
+find it's pretty easy to create a function to diff Clojure forms.
+Mine's here:
+
+http://github.com/GeorgeJahad/difform 
+
+http://clojars.org/difform
+
+Works like this:
+
+<example>
 (use 'com.georgejahad.difform)
 (difform { 1 2 3 4 5 6} { 5 6 1 2 3 7})
    {1 2, 3
  - 4
  + 7
    , 5 6}
+</example>
 
+As you can see, the two forms differ only in the value of key 3, where
+it is 4 in the first form and 7 in the second.  For a more interesting
+example,
+
+<example>
 (difform
 
 {:cart {:items [{:new-delivery {:ids ["-1"]}, :old-unit-price "700.00", :product-id "prod-1", :quantity "1", :unit-price "700.00"}], :old-total-dollars "700.00", :purchase? false, :total-dollars "700.00"}, :day "2010-05-18", :event-ids ["1274166000010:some-session-id-1"], :old-id "14", :delivery {:ids [nil]}, :session "some-session-id-1"}
 
 {:day "2010-05-18", :old-id "14", :session "some-session-id-1", :delivery nil, :cart {:purchase? false, :old-total-dollars "1400.00", :total-dollars "1400.00", :items [{:product-id "prod-1", :old-unit-price "700.00", :unit-price "700.00", :quantity "2", :new-delivery {:ids ["-1"]}}]}, :event-ids ["1274166000000:some-session-id-1"]})
 
+</example>
 
+produces the following.  Here the values of the quantity,
+total-dollars, and a few other fields have changed:
+
+
+
+<example>
    {:cart
     {:items
      [{:new-delivery {:ids ["-1"]},
@@ -48,10 +75,16 @@ Diffs two clojure forms, eg:
    0:some-session-id-1"],
     :old-id "14",
     :session "some-session-id-1"}
+</example>
 
 A very common use is with clojure.test.  For example, if clojure test reports you have failed a test like this:
 
 FAIL in (xyz-test) (xyz_spec.clj:7)
 expected: (= form1 form2)
 
-Run (diff form1 form2) to see what the exact failure was.
+Run (difform form1 form2) to see what the exact failure was.
+
+** Comments/Suggestions
+
+Send any comments/suggestions to George Jahad at "george-clojure at blackbirdsystems.net" or to the main clojure mailing list: http://groups.google.com/group/clojure
+

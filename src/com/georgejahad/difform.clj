@@ -37,14 +37,15 @@
 (defn- sort-form [f]
   (postwalk s-form f))
 
-(def diff-markers 
+(def diff-markers
      {diff_match_patch$Operation/EQUAL " "
       diff_match_patch$Operation/INSERT "+"
       diff_match_patch$Operation/DELETE "-"})
 
 (defn- print-diff [d]
   (let [m (diff-markers (.operation d)) ]
-    (println (str " " m) (s/replace  (.trim (.text d)) #"\n" (str "\n " m " ")))))
+    (println (str " " m) (s/replace (.trim (.text d))
+                                    #"\n" (str "\n " m " ")))))
 
 (defn difform [x y]
   (let [diffs (.diff_main (diff_match_patch.)

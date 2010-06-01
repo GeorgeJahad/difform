@@ -1,0 +1,58 @@
+# difform
+
+Diffs two clojure forms, eg:
+
+(use 'com.georgejahad.difform)
+(difform { 1 2 3 4 6 5} { 6 7 3 4 1 2})
+
+   {1 2, 3 4, 6
+ - 5
+ + 7
+   }
+
+(difform
+
+{:cart {:items [{:new-delivery {:ids ["-1"]}, :old-unit-price "700.00", :product-id "prod-1", :quantity "1", :unit-price "700.00"}], :old-total-dollars "700.00", :purchase? false, :total-dollars "700.00"}, :day "2010-05-18", :event-ids ["1274166000010:some-session-id-1"], :old-id "14", :delivery {:ids [nil]}, :session "some-session-id-1"}
+
+{:day "2010-05-18", :old-id "14", :session "some-session-id-1", :delivery nil, :cart {:purchase? false, :old-total-dollars "1400.00", :total-dollars "1400.00", :items [{:product-id "prod-1", :old-unit-price "700.00", :unit-price "700.00", :quantity "2", :new-delivery {:ids ["-1"]}}]}, :event-ids ["1274166000000:some-session-id-1"]})
+
+
+   {:cart
+    {:items
+     [{:new-delivery {:ids ["-1"]},
+       :old-unit-price "700.00",
+       :product-id "prod-1",
+       :quantity "
+ - 1
+ + 2
+   ",
+       :unit-price "700.00"}],
+     :old-total-dollars "
+ - 7
+ + 14
+   00.00",
+     :purchase? false,
+     :total-dollars "
+ - 7
+ + 14
+   00.00"},
+    :day "2010-05-18",
+    :delivery
+ - {:ids [
+   nil
+ - ]}
+   ,
+    :event-ids ["1274166
+ + 0
+   0000
+ - 1
+   0:some-session-id-1"],
+    :old-id "14",
+    :session "some-session-id-1"}
+
+A very common use is with clojure.test.  For example, if clojure test reports you have failed a test like this:
+
+FAIL in (xyz-test) (xyz_spec.clj:7)
+expected: (= form1 form2)
+
+Run (form-diff form1 form2) to see what the exact failure was.

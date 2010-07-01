@@ -34,7 +34,7 @@
       (sort-set f)
       f)))
 
-(defn- sort-form [f]
+(defn sort-form [f]
   (postwalk s-form f))
 
 (def diff-markers

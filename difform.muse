@@ -3,7 +3,7 @@
 ** Diffing Clojure Forms
 
 Start with Stuart Sierra's excellent clojure.walk, (to sort the
-maps/sets,) add Tom Faulhauber wonderful Clojure pretty print, and
+maps/sets,) add Tom Faulhaber's wonderful Clojure pretty print, and
 finish it off with Neil Fraser's magnificent Java diff library:
 http://code.google.com/p/google-diff-match-patch/wiki/API, and you'll
 find it's pretty easy to create a function to diff Clojure forms.

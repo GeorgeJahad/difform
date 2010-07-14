@@ -1,4 +1,4 @@
-(defproject org.clojars.brenton/difform "1.0.1"
+(defproject org.clojars.brenton/difform "1.0.2"
   :description "Diff clojure forms!"
   :dependencies [[org.clojure/clojure "1.1.0"]
                  [org.clojure/clojure-contrib "1.1.0"]

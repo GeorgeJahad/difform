@@ -53,9 +53,19 @@
   (let [m (diff-markers (.operation d)) ]
     (println (str " " m) (s/replace (.trim (.text d))
                                     #"\n" (str "\n " m " ")))))
+(defn canonical-form [f]
+  (with-out-str (pprint/pprint (sort-form f))))
 
 (defn difform [x y]
   (let [diffs (.diff_main (diff_match_patch.)
-                          (with-out-str (pprint/pprint (sort-form x)))
-                          (with-out-str (pprint/pprint (sort-form y))))]
+                          (canonical-form x)
+                          (canonical-form y))]
     (doseq [d diffs] (print-diff d))))
+
+(defn clean-difform [x y]
+  (let [dmp (diff_match_patch.)
+        diffs (.diff_main dmp
+                          (canonical-form x)
+                          (canonical-form y))]
+    (do (.diff_cleanupSemantic dmp diffs)
+        (doseq [d diffs] (print-diff d)))))

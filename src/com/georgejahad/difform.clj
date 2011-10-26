@@ -15,7 +15,7 @@
 (ns com.georgejahad.difform
   (:import name.fraser.neil.plaintext.diff_match_patch$Operation
            name.fraser.neil.plaintext.diff_match_patch)
-  (:require [clojure.contrib.str-utils2 :as s])
+  (:require [clojure.string :as s])
   (:use clojure.walk))
 
 (defn require-contrib []

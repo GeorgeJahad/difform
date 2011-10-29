@@ -15,16 +15,9 @@
 (ns com.georgejahad.difform
   (:import name.fraser.neil.plaintext.diff_match_patch$Operation
            name.fraser.neil.plaintext.diff_match_patch)
-  (:require [clojure.contrib.str-utils2 :as s])
+  (:require [clojure.string :as s]
+            [clojure.pprint :as pprint])
   (:use clojure.walk))
-
-(defn require-contrib []
-  (try
-   (require '(clojure.contrib [pprint :as pprint]))
-   (catch Throwable e
-     (require '(clojure [pprint :as pprint])))))
-
-(require-contrib)
 
 (defn- str-comparator [x y]
   (compare (str x) (str y)))

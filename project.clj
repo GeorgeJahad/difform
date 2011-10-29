@@ -1,4 +1,4 @@
-(defproject difform "1.1.1"
+(defproject difform "1.1.2"
   :description "Diff clojure forms!"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojars.brenton/google-diff-match-patch "0.1"]]
